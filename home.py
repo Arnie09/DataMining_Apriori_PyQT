@@ -1,4 +1,5 @@
 from AprioriDialog2 import Apriori_Window
+from Demo import Demo_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
@@ -10,6 +11,13 @@ class Ui_MainWindow(object):
 
     def toQuit(self):
         sys.exit()
+
+    def callDemo(self):
+        print("hI")
+        self.Demo = QtWidgets.QMainWindow()
+        self.DemoUI = Demo_MainWindow()
+        self.DemoUI.setupUi(self.Demo)
+        self.Demo.show()
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -36,6 +44,7 @@ class Ui_MainWindow(object):
 
         self.InfoPushbutton = QtWidgets.QPushButton(self.centralwidget)
         self.InfoPushbutton.setObjectName("InfoPushbutton")
+        self.InfoPushbutton.clicked.connect(self.callDemo)
 
         self.verticalLayout.addWidget(self.InfoPushbutton)
         self.TryOutPushButton = QtWidgets.QPushButton(self.centralwidget)
