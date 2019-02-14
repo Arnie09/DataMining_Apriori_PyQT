@@ -2,23 +2,46 @@ import pandas as pd
 from itertools import combinations
 class apriori:
 
-    def __init__(self,address,min,invNo,productCode):
+    def __init__(self,**kwargs):
         print("fortnite")
-        self.min=min
-        self.dataset=pd.read_excel(address)
-        self.columnheader=list(self.dataset.columns.values)
-        self.invNo=self.dataset[invNo] #list of the invoice no.
-        self.productcode=self.dataset[productCode] #list of all the product codes
+        self.min=kwargs.get('min')
+        if(kwargs.get('address') is not None):
+            self.dataset=pd.read_excel(kwargs.get('address'))
+            self.columnheader=list(self.dataset.columns.values)
+            self.invNo=self.dataset[kwargs.get('invNo')] #list of the invoice no.
+            self.productcode=self.dataset[kwargs.get('productCode')] #list of all the product codes
 
-        self.transaction={}  #to store all the transactions w.r.t invNo
-        self.uniqproductcode=[] #storing the codes of each product only once
+        if(kwargs.get('transactions') is not None):
+            self.transaction = kwargs.get('transactions')
+            self.uniqproductcode = kwargs.get('productlist')
+        else:
+            self.transaction={}  #to store all the transactions w.r.t invNo
+            self.uniqproductcode=[] #storing the codes of each product only once
+
         self.allLs={}
         self.finalL={}
         self.finalRules={}
 
-        self.initialise()
-        self.createL1()
-        self.createLs()
+        if(self.transaction):
+            self.createL1()
+            self.createLs()
+        else:
+            self.initialise()
+            self.createL1()
+            self.createLs()
+
+
+
+    # def __init__(self,min,transactions,productlist):
+    #     print("Apex")
+    #     self.min = min
+    #     self.transaction=transactions  #to store all the transactions w.r.t invNo
+    #     self.uniqproductcode=productlist #storing the codes of each product only once
+    #     self.allLs={}
+    #     self.finalL={}
+    #     self.finalRules={}
+    #     self.createL1()
+    #     self.createLs()
 
 
 

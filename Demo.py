@@ -3,11 +3,48 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
+from Apriori_core import apriori
 
 import random
 
 
 class Demo_MainWindow(object):
+
+    def methodGenerateList(self):
+        self.AprioriInstance = apriori(min = self.min , transactions = self.transactions , productlist = self.itemlist)
+        self.a=1
+        self.b=0
+        self.AprioriInstance.finalRules[1]="No rules to display for the first list!"
+        self.showList(self.AprioriInstance.allLs[self.a])
+        print(self.a)
+        self.generateList.clicked.connect(lambda:self.showList(self.AprioriInstance.allLs[self.a]))
+        self.generateRules.clicked.connect(lambda:self.showRules(self.AprioriInstance.finalRules[self.b]))
+        if(self.a == 1):
+            self.generateRules.setEnabled(False)
+        else:
+            self.generateRules.setEnabled(True)
+
+    def showRules(self,dict):
+        print(self.a,self.b)
+
+        self.RulesOutput.clear()
+        for elements in dict:
+            dispString = str(elements)
+            self.RulesOutput.append(dispString)
+
+    def showList(self,dict):
+
+        if(self.a <= len(self.AprioriInstance.allLs)-1):
+            self.a+=1
+            self.b+=1
+
+        # if(self.b == 6):
+        #     self.b+=1
+
+        self.ListOutput.clear()
+        for elements in dict:
+            dispString = str(elements)+" : "+str(dict[elements])
+            self.ListOutput.append(dispString)
 
     def plot(self):
         ''' plot some random stuff '''
@@ -89,21 +126,25 @@ class Demo_MainWindow(object):
 
         self.Transaction_1 = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.Transaction_1.setObjectName("Transaction_1")
+        self.Transaction_1.setText("a,b,c,d")
 
         self.gridLayout.addWidget(self.Transaction_1, 0, 1, 1, 1)
 
         self.Transaction_2 = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.Transaction_2.setObjectName("Transaction_2")
+        self.Transaction_2.setText("a,b,c")
 
         self.gridLayout.addWidget(self.Transaction_2, 2, 1, 1, 1)
 
         self.Transaction_3 = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.Transaction_3.setObjectName("Transaction_3")
+        self.Transaction_3.setText("b,c")
 
         self.gridLayout.addWidget(self.Transaction_3, 3, 1, 1, 1)
 
         self.Transaction_4 = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.Transaction_4.setObjectName("Transaction_4")
+        self.Transaction_4.setText("d,b")
 
         self.gridLayout.addWidget(self.Transaction_4, 4, 1, 1, 1)
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
@@ -131,6 +172,7 @@ class Demo_MainWindow(object):
 
         self.generateList = QtWidgets.QPushButton(self.gridLayoutWidget_2)
         self.generateList.setObjectName("generateList")
+        self.generateList.clicked.connect(self.methodGenerateList)
 
         self.gridLayout_2.addWidget(self.generateList, 2, 0, 1, 1)
 
@@ -149,6 +191,17 @@ class Demo_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        #setting up apriori details
+        self.transactions = {}
+        self.transactions[1] = self.Transaction_1.text().split(",")
+        self.transactions[2] = self.Transaction_2.text().split(",")
+        self.transactions[3] = self.Transaction_3.text().split(",")
+        self.transactions[4] = self.Transaction_4.text().split(",")
+        print(self.transactions)
+        self.min = 2
+
+        self.itemlist = ['a','b','c','d']
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
