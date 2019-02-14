@@ -11,13 +11,27 @@ import random
 class Demo_MainWindow(object):
 
     def methodGenerateList(self):
-        self.AprioriInstance = apriori(min = self.min , transactions = self.transactions , productlist = self.itemlist)
+        #setting up apriori details
+        self.transactions = {}
+        self.transactions[1] = self.Transaction_1.text().split(",")
+        self.transactions[2] = self.Transaction_2.text().split(",")
+        self.transactions[3] = self.Transaction_3.text().split(",")
+        self.transactions[4] = self.Transaction_4.text().split(",")
+        print(self.transactions)
+        self.min = 1
+        self.dispString = ""
+        self.dispString2 = ""
         self.a=1
         self.b=0
+        self.itemlist = ['a','b','c','d']
+
+        self.AprioriInstance = apriori(min = self.min , transactions = self.transactions , productlist = self.itemlist)
         self.AprioriInstance.finalRules[1]="No rules to display for the first list!"
-        self.showList(self.AprioriInstance.allLs[self.a])
+        if(self.a == 1):
+            self.showList(self.AprioriInstance.allLs[self.a])
         print(self.a)
-        self.generateList.clicked.connect(lambda:self.showList(self.AprioriInstance.allLs[self.a]))
+        print("Hello")
+        self.generateRules.clicked.connect(lambda:self.showList(self.AprioriInstance.allLs[self.a]))
         self.generateRules.clicked.connect(lambda:self.showRules(self.AprioriInstance.finalRules[self.b]))
         if(self.a == 1):
             self.generateRules.setEnabled(False)
@@ -26,11 +40,12 @@ class Demo_MainWindow(object):
 
     def showRules(self,dict):
         print(self.a,self.b)
+        print("Hi")
 
         self.RulesOutput.clear()
         for elements in dict:
-            dispString = str(elements)
-            self.RulesOutput.append(dispString)
+            self.dispString = str(elements)
+            self.RulesOutput.append(self.dispString)
 
     def showList(self,dict):
 
@@ -43,8 +58,8 @@ class Demo_MainWindow(object):
 
         self.ListOutput.clear()
         for elements in dict:
-            dispString = str(elements)+" : "+str(dict[elements])
-            self.ListOutput.append(dispString)
+            self.dispString2 = str(elements)+" : "+str(dict[elements])
+            self.ListOutput.append(self.dispString2)
 
     def plot(self):
         ''' plot some random stuff '''
@@ -192,16 +207,7 @@ class Demo_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        #setting up apriori details
-        self.transactions = {}
-        self.transactions[1] = self.Transaction_1.text().split(",")
-        self.transactions[2] = self.Transaction_2.text().split(",")
-        self.transactions[3] = self.Transaction_3.text().split(",")
-        self.transactions[4] = self.Transaction_4.text().split(",")
-        print(self.transactions)
-        self.min = 2
 
-        self.itemlist = ['a','b','c','d']
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

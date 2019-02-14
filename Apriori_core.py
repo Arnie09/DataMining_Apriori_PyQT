@@ -22,7 +22,7 @@ class apriori:
         self.finalL={}
         self.finalRules={}
 
-        if(self.transaction):
+        if(self.transaction):# boolean on an empty dictionary returns false
             self.createL1()
             self.createLs()
         else:
