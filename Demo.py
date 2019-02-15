@@ -10,14 +10,16 @@ import random
 
 class Demo_MainWindow(object):
 
+
+
     def methodGenerateList(self):
         #setting up apriori details
+        print("Heyo")
         self.transactions = {}
         self.transactions[1] = self.Transaction_1.text().split(",")
         self.transactions[2] = self.Transaction_2.text().split(",")
         self.transactions[3] = self.Transaction_3.text().split(",")
         self.transactions[4] = self.Transaction_4.text().split(",")
-        print(self.transactions)
         self.min = 1
         self.dispString = ""
         self.dispString2 = ""
@@ -31,8 +33,7 @@ class Demo_MainWindow(object):
             self.showList(self.AprioriInstance.allLs[self.a])
         print(self.a)
         print("Hello")
-        self.generateRules.clicked.connect(lambda:self.showList(self.AprioriInstance.allLs[self.a]))
-        self.generateRules.clicked.connect(lambda:self.showRules(self.AprioriInstance.finalRules[self.b]))
+
         if(self.a == 1):
             self.generateRules.setEnabled(False)
         else:
@@ -48,11 +49,11 @@ class Demo_MainWindow(object):
             self.RulesOutput.append(self.dispString)
 
     def showList(self,dict):
-
+        print("showList")
         if(self.a <= len(self.AprioriInstance.allLs)-1):
             self.a+=1
             self.b+=1
-
+        
         # if(self.b == 6):
         #     self.b+=1
 
@@ -187,7 +188,6 @@ class Demo_MainWindow(object):
 
         self.generateList = QtWidgets.QPushButton(self.gridLayoutWidget_2)
         self.generateList.setObjectName("generateList")
-        self.generateList.clicked.connect(self.methodGenerateList)
 
         self.gridLayout_2.addWidget(self.generateList, 2, 0, 1, 1)
 
@@ -197,6 +197,10 @@ class Demo_MainWindow(object):
         self.AprioriButton = QtWidgets.QPushButton(self.centralwidget)
         self.AprioriButton.setGeometry(QtCore.QRect(650, 310, 301, 28))
         self.AprioriButton.setObjectName("AprioriButton")
+        self.AprioriButton.clicked.connect(self.methodGenerateList)
+
+        self.generateList.clicked.connect(lambda:self.showList(self.AprioriInstance.allLs[self.a]))
+        self.generateRules.clicked.connect(lambda:self.showRules(self.AprioriInstance.finalRules[self.b]))
 
         self.gridLayout_2.addWidget(self.generateRules, 2, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
