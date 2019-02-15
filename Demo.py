@@ -163,7 +163,7 @@ class Demo_MainWindow(object):
 
         self.gridLayout.addWidget(self.Transaction_4, 4, 1, 1, 1)
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
-        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(650, 310, 301, 221))
+        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(650, 350, 301, 221))
         self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -194,6 +194,10 @@ class Demo_MainWindow(object):
         self.generateRules = QtWidgets.QPushButton(self.gridLayoutWidget_2)
         self.generateRules.setObjectName("generateRules")
 
+        self.AprioriButton = QtWidgets.QPushButton(self.centralwidget)
+        self.AprioriButton.setGeometry(QtCore.QRect(650, 310, 301, 28))
+        self.AprioriButton.setObjectName("AprioriButton")
+
         self.gridLayout_2.addWidget(self.generateRules, 2, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -220,3 +224,4 @@ class Demo_MainWindow(object):
         self.label_6.setText(_translate("MainWindow", "Corresponding rules :"))
         self.generateList.setText(_translate("MainWindow", "Show list"))
         self.generateRules.setText(_translate("MainWindow", "Show Rules"))
+        self.AprioriButton.setText(_translate("MainWindow", "Run Apriori"))
