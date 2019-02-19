@@ -9,12 +9,13 @@ import random
 
 
 class Demo_MainWindow(object):
-
+    def __init__(self):
+        self.data = []
+        self.labels = []
 
 
     def methodGenerateList(self):
         #setting up apriori details
-        print("Heyo")
         self.transactions = {}
         self.transactions[1] = self.Transaction_1.text().split(",")
         self.transactions[2] = self.Transaction_2.text().split(",")
@@ -40,8 +41,8 @@ class Demo_MainWindow(object):
             self.generateRules.setEnabled(True)
 
     def showRules(self,dict):
+        self.data = []
         print(self.a,self.b)
-        print("Hi")
 
         self.RulesOutput.clear()
         for elements in dict:
@@ -49,41 +50,49 @@ class Demo_MainWindow(object):
             self.RulesOutput.append(self.dispString)
 
     def showList(self,dict):
-        print("showList")
+        self.data = []
+        self.labels = []
         if(self.a <= len(self.AprioriInstance.allLs)-1):
             self.a+=1
             self.b+=1
-        
+
         # if(self.b == 6):
         #     self.b+=1
 
         self.ListOutput.clear()
         for elements in dict:
             self.dispString2 = str(elements)+" : "+str(dict[elements])
+            self.data.append(dict[elements])
+            self.labels.append(elements)
             self.ListOutput.append(self.dispString2)
+        self.plot()
 
     def plot(self):
-        ''' plot some random stuff '''
+        ''' plot the data '''
         # random data
-        data = [random.random() for i in range(10)]
-
+        #data = [random.random() for i in range(10)]
+        print(self.data)
+        print(self.labels)
+        x = []
         # instead of ax.hold(False)
         self.figure.clear()
-
+        for i in range(len(self.labels)):
+            x.append(i)
         # create an axis
         ax = self.figure.add_subplot(111,position=[0.10, 0.10, 0.5, 0.5])
 
         # discards the old graph
         # ax.hold(False) # deprecated, see above
+        ax.set_xticks(x)
+        ax.set_xticklabels(self.labels)
 
         # plot data
-        ax.plot(data, '*-')
+        ax.plot(self.data, '*-')
 
         # refresh canvas
         self.canvas.draw()
 
     def setupUi(self, MainWindow):
-        print("Here")
         self.MainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1024, 768)
@@ -105,8 +114,7 @@ class Demo_MainWindow(object):
         self.toolbar = NavigationToolbar(self.canvas, self.MainWindow)
 
         # Just some button connected to `plot` method
-        self.button = QtWidgets.QPushButton('Plot')
-        self.button.clicked.connect(self.plot)
+
 
 
         # set the layout
@@ -115,7 +123,7 @@ class Demo_MainWindow(object):
         self.layout.setGeometry(QtCore.QRect(10,10,400,400))
         self.layout.addWidget(self.toolbar,1)
         self.layout.addWidget(self.canvas,1)
-        self.layout.addWidget(self.button,1)
+
         #self.FigureCanvas.setGeometry(QtCore.QRect(20, 20, 431,511))
 
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
