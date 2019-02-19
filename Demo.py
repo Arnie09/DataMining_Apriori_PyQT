@@ -79,7 +79,7 @@ class Demo_MainWindow(object):
         for i in range(len(self.labels)):
             x.append(i)
         # create an axis
-        ax = self.figure.add_subplot(111,position=[0.10, 0.10, 0.5, 0.5])
+        ax = self.figure.add_subplot(111,position=[0.10, 0.10, 0.8, 0.7])
 
         # discards the old graph
         # ax.hold(False) # deprecated, see above
@@ -98,6 +98,14 @@ class Demo_MainWindow(object):
         MainWindow.resize(1024, 768)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
+        self.gridLayoutWidget_3 = QtWidgets.QWidget(self.centralwidget)
+        self.gridLayoutWidget_3.setGeometry(QtCore.QRect(10, 10, 600, 600))
+        self.gridLayoutWidget_3.setObjectName("gridLayoutWidget")
+
+        self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(650, 30, 301, 301))
+        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
 
 
         #code for the matplotlib part(bsically stuff copied from stack overflow :) )
@@ -119,16 +127,14 @@ class Demo_MainWindow(object):
 
         # set the layout
 
-        self.layout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.layout.setGeometry(QtCore.QRect(10,10,400,400))
+        self.layout = QtWidgets.QVBoxLayout(self.gridLayoutWidget_3)
+        self.layout.setGeometry(QtCore.QRect(10,10,100,100))
         self.layout.addWidget(self.toolbar,1)
         self.layout.addWidget(self.canvas,1)
 
         #self.FigureCanvas.setGeometry(QtCore.QRect(20, 20, 431,511))
 
-        self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(650, 30, 301, 301))
-        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
+
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
