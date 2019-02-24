@@ -99,6 +99,7 @@ class Demo_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
+        #FOR FIXING UP THE GRAPH IN MainWindow
         self.gridLayoutWidget_3 = QtWidgets.QWidget(self.centralwidget)
         self.gridLayoutWidget_3.setGeometry(QtCore.QRect(10, 10, 600, 600))
         self.gridLayoutWidget_3.setObjectName("gridLayoutWidget")
