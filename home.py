@@ -2,6 +2,7 @@ from AprioriDialog2 import Apriori_Window
 from Demo import Demo_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_MainWindow(object):
     def callApriori(self):
         self.Apriori = QtWidgets.QMainWindow()
@@ -29,6 +30,8 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.frame = QtWidgets.QFrame(self.centralwidget)
+        self.frame.setStyleSheet("background:\n"
+"rgb(255, 253, 172)")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -41,22 +44,27 @@ class Ui_MainWindow(object):
         self.label_Data_Mining.setFont(font)
         self.label_Data_Mining.setObjectName("label_Data_Mining")
         self.verticalLayout.addWidget(self.frame)
-
         self.InfoPushbutton = QtWidgets.QPushButton(self.centralwidget)
         self.InfoPushbutton.setObjectName("InfoPushbutton")
+        self.verticalLayout.addWidget(self.InfoPushbutton)
         self.InfoPushbutton.clicked.connect(self.callDemo)
 
-        self.verticalLayout.addWidget(self.InfoPushbutton)
         self.TryOutPushButton = QtWidgets.QPushButton(self.centralwidget)
         self.TryOutPushButton.setObjectName("TryOutPushButton")
+        self.verticalLayout.addWidget(self.TryOutPushButton)
         self.TryOutPushButton.clicked.connect(self.callApriori)
 
-        self.verticalLayout.addWidget(self.TryOutPushButton)
+        self.InfoFPButton = QtWidgets.QPushButton(self.centralwidget)
+        self.InfoFPButton.setObjectName("InfoFPButton")
+        self.verticalLayout.addWidget(self.InfoFPButton)
+        self.TryOutFPGrowthButton = QtWidgets.QPushButton(self.centralwidget)
+        self.TryOutFPGrowthButton.setObjectName("TryOutFPGrowthButton")
+        self.verticalLayout.addWidget(self.TryOutFPGrowthButton)
         self.QuitButton = QtWidgets.QPushButton(self.centralwidget)
         self.QuitButton.setObjectName("QuitButton")
-        self.QuitButton.clicked.connect(self.toQuit)
-
         self.verticalLayout.addWidget(self.QuitButton)
+        self.QuitButton.clicked.connect(self.toQuit)
+        
         self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -76,6 +84,8 @@ class Ui_MainWindow(object):
         self.label_Data_Mining.setText(_translate("MainWindow", "Data Mining!"))
         self.InfoPushbutton.setText(_translate("MainWindow", "Apriori - Info"))
         self.TryOutPushButton.setText(_translate("MainWindow", "Try out Apriori!"))
+        self.InfoFPButton.setText(_translate("MainWindow", "FP-Growth Info"))
+        self.TryOutFPGrowthButton.setText(_translate("MainWindow", "Try out FP Growth"))
         self.QuitButton.setText(_translate("MainWindow", "Quit"))
 
 
