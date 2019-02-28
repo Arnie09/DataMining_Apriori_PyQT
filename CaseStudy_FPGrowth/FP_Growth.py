@@ -1,7 +1,7 @@
 import math
 import pandas as pd
 import xlrd
-
+from itertools import combinations
 class treeNode:
     def __init__(self,name,count,parent,label):
         self.name=str(name)
@@ -21,30 +21,44 @@ class treeNode:
 
 
 class FP_Tree:
-    def __init__(self,path,InvNo,StCode,minSup):
-        self.minSup=minSup
+    def __init__(self,**kwargs):
+        self.minSup=kwargs.get('min')
         self.labelcount=0
         self.freqItems=[]
+        self.dataSet={}
 
-        self.initialiseData(path,InvNo,StCode)
+        if(kwargs.get('address') is not None):
+            self.initialiseData(kwargs.get('address'),kwargs.get('TransID'),kwargs.get('ProductCode'))
+
+        elif(kwargs.get('transactions') is not None):
+
+            self.dataSet=kwargs.get('transactions')
+            self.formatdata()
+
 
         self.mainTree,self.mainHeadertable=self.createTree(self.dataSet,self.minSup)# main FP tree and HeaderTable are formed
 
 
         self.mineTree(self.mainTree,self.mainHeadertable,[],math.inf) #Mining the main tree
 
-    def initialiseData(self,path,InvNo,StCode):#This function converts the dataset to the format in which our algorithm will work.
-        dataset=pd.read_excel(path)
-        invNo=dataset[InvNo]
-        productcode=dataset[StCode]
-        self.dataSet={}
-        for i in range(len(invNo)):
-            self.dataSet[invNo[i]]=self.dataSet.get(invNo[i],[])+[str(productcode[i])]
 
+    def formatdata(self):
 
         self.dataSet=list(self.dataSet.values())
         for i in self.dataSet:
             i.append(1)
+
+
+    def initialiseData(self,path,TransID,ProductCode):#This function converts the dataset to the format in which our algorithm will work.
+        dataset=pd.read_excel(path)
+        invNo=dataset[TransID]
+        productcode=dataset[ProductCode]
+
+        for i in range(len(invNo)):
+            self.dataSet[invNo[i]]=self.dataSet.get(invNo[i],[])+[str(productcode[i])]
+
+        self.formatdata()
+
 
     def createTree(self,data,sup):#This function creates the FP tree for the data passed and returns the tree along with the corrosponding HeaderTable. This function was created keeping in mind that it will be used recursively
         headerTable={}
@@ -117,15 +131,15 @@ class FP_Tree:
 
     def mineTree(self,inTree,headerTable,preFix,count):#This function is for mining the main tree as well as the conditional trees
 
-        bigL = [v[0] for v in sorted(headerTable.items(), key=lambda p: p[1][0])]
-        #bigL=headerTable
+        #bigL = [v[0] for v in sorted(headerTable.items(), key=lambda p: p[1][0])]
+        bigL=headerTable
 
         for basePat in bigL:
             k=min(headerTable[basePat][0],count)
             newFreqItem=preFix.copy()
             newFreqItem.append(basePat)
-            if len(newFreqItem)>1:
-                self.freqItems.append(newFreqItem+[k])
+            #if len(newFreqItem)>1:
+            self.freqItems.append(newFreqItem+[k])
             condPattbases=self.findPrefixPath(basePat,headerTable[basePat][1])
             myCondTree,myHead=self.createTree(condPattbases,self.minSup)
             if myHead!=None:
@@ -135,8 +149,47 @@ class FP_Tree:
         ordereditems=[v for v in sorted(self.freqItems,key=len)]
         for i in ordereditems:
             print(i)
+    def displayRules(self,conf=0.8):
+        suppdata={}
+        rules=[]
+        k=list(self.mainHeadertable.keys())
+        for i in range(len(self.freqItems)):
+            t=self.freqItems[i][-1]
+            self.freqItems[i]=[v for v in sorted(self.freqItems[i][:-1],key=k.index)]+[t]
+        for i in self.freqItems:
+            suppdata[tuple(i[:-1])]=i[-1]
+
+        for key in suppdata:
+            supL=suppdata[key]
+            L=list(key)
+            subsets=[]
+            for i in range(1,len(key)):
+                subsets.append(list(combinations(key,i)))
+
+
+            for i in subsets:
+                for subset in i:
+
+                    S=list(subset)
+                    LminusS=[i for i in L if i not in S]
+
+                    supS=suppdata[subset]
+
+                    confidence=supL/supS
+                    if confidence>=conf:
+                        rule=(str(S),str(LminusS),confidence*100)
+                        rules.append(rule)
+
+        for i in rules:
+            print(i[0],'=>',i[1],":",str(round(i[2]))+"%")
 
 
 
-obj=FP_Tree(r"E:\Projects\machine Learning\Book1.xlsx",'InvoiceNo','StockCode',5)
+
+
+'''trans={1:['A','B','C','D','E'],2:['A','C','E'],3:['B','C','D'],4:['A','D','E']}
+obj=FP_Tree(transactions=trans,min=2)#address,TransID,ProductCode,minSup):
+
+obj=FP_Tree(address=r"E:\Projects\machine Learning\Book1.xlsx",TransID='InvoiceNo',ProductCode='StockCode',min=5)#address,TransID,ProductCode,minSup):
 obj.display()
+'''
