@@ -1,15 +1,54 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'FPDialog.ui'
-#
-# Created by: PyQt5 UI code generator 5.11.2
-#
-# WARNING! All changes made in this file will be lost!
-
+from FP_Growth_Core import FP_Tree
+import pandas as pd
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_MainWindow(object):
+class FP_MainWindow(object):
+
+    columnheader = []
+
+    def toQuit(self):
+        self.MainWindow.close()
+
+    def OpenFile(self):
+        self.name = QtWidgets.QFileDialog.getOpenFileName()
+        self.path=self.name[0]
+        self.localdb=pd.read_excel(self.path)
+        self.columnheader=list(self.localdb.columns.values)
+
+        self.ProductNameHeader.addItems(self.columnheader)
+        self.InvoiceHeader.addItems(self.columnheader)
+
+        self.ShowPath.setText(self.path)
+
+
+    def run_fpgrowth(self):
+
+        self.fpInstance = FP_Tree(address=self.path,min=int(self.Min.text()),invNo=self.InvoiceHeader.currentText(),productCode=self.ProductNameHeader.currentText())
+        self.fpInstance.display()
+        self.fpInstance.displayRules()
+        self.showList(self.fpInstance.finalList)
+        self.showRules(self.fpInstance.finalRules)
+
+    def showList(self,listsFP):
+
+
+        self.outputList.clear()
+        # for elements in listsFP:
+        #     print(elements)
+        for elements in listsFP:
+            individual_list = str(elements)
+            self.outputList.append(individual_list)
+
+    def showRules(self,rules):
+
+        self.outputRules.clear()
+
+        for i in rules:
+            individual_rule = str(i[0]+'=>'+i[1]+":"+str(round(i[2]))+"%")
+            self.outputRules.append(individual_rule)
+
     def setupUi(self, MainWindow):
+        self.MainWindow=MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1095, 892)
         MainWindow.setStyleSheet("background:qradialgradient(spread:pad, cx:0.261343, cy:0.477, radius:0.884, fx:0.5, fy:0.5, stop:0 rgba(249, 255, 130, 255), stop:1 rgba(255, 255, 255, 255))\n"
@@ -61,6 +100,8 @@ class Ui_MainWindow(object):
 "font: 75 12pt \"MS Shell Dlg 2\";\n"
 "color: rgb(170, 255, 255);")
         self.Run.setObjectName("Run")
+        self.Run.clicked.connect(self.run_fpgrowth)
+
         self.gridLayout.addWidget(self.Run, 7, 2, 1, 1)
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setObjectName("label_3")
@@ -75,6 +116,10 @@ class Ui_MainWindow(object):
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 9, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
+
+
+        self.gridLayout.addWidget(self.ShowPath, 1, 2, 1, 1)
+        MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1095, 26))
         self.menubar.setObjectName("menubar")
@@ -86,11 +131,15 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.actionOpen = QtWidgets.QAction(MainWindow)
+        self.actionOpen.setObjectName("actionOpen")
+        self.actionOpen.triggered.connect(self.OpenFile)
+
         self.actionExit = QtWidgets.QAction(MainWindow)
         self.actionExit.setObjectName("actionExit")
-        self.actionTo_open_an_xlsx_file = QtWidgets.QAction(MainWindow)
-        self.actionTo_open_an_xlsx_file.setObjectName("actionTo_open_an_xlsx_file")
-        self.menuFile.addAction(self.menuOpen.menuAction())
+        self.actionExit.triggered.connect(self.toQuit)
+
+        self.menuFile.addAction(self.actionOpen)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
@@ -111,15 +160,14 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuOpen.setTitle(_translate("MainWindow", "Open"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
-        self.actionTo_open_an_xlsx_file.setText(_translate("MainWindow", "to open an xlsx file"))
+        self.actionOpen.setText(_translate("MainWindow", "Open"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
+#     sys.exit(app.exec_())

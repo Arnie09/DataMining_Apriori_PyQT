@@ -1,4 +1,5 @@
 from AprioriDialog2 import Apriori_Window
+from FPDialog import FP_MainWindow
 from Demo import Demo_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -9,6 +10,12 @@ class Ui_MainWindow(object):
         self.ui = Apriori_Window()
         self.ui.setupUi(self.Apriori)
         self.Apriori.show()
+
+    def callFPGrowth(self):
+        self.FPGrowth = QtWidgets.QMainWindow()
+        self.ui = FP_MainWindow()
+        self.ui.setupUi(self.FPGrowth)
+        self.FPGrowth.show()
 
     def toQuit(self):
         sys.exit()
@@ -59,12 +66,14 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.InfoFPButton)
         self.TryOutFPGrowthButton = QtWidgets.QPushButton(self.centralwidget)
         self.TryOutFPGrowthButton.setObjectName("TryOutFPGrowthButton")
+        self.TryOutFPGrowthButton.clicked.connect(self.callFPGrowth)
+
         self.verticalLayout.addWidget(self.TryOutFPGrowthButton)
         self.QuitButton = QtWidgets.QPushButton(self.centralwidget)
         self.QuitButton.setObjectName("QuitButton")
         self.verticalLayout.addWidget(self.QuitButton)
         self.QuitButton.clicked.connect(self.toQuit)
-        
+
         self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)

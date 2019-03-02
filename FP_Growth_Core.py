@@ -26,9 +26,11 @@ class FP_Tree:
         self.labelcount=0
         self.freqItems=[]
         self.dataSet={}
+        self.finalRules = []
+        self.finalList = []
 
         if(kwargs.get('address') is not None):
-            self.initialiseData(kwargs.get('address'),kwargs.get('TransID'),kwargs.get('ProductCode'))
+            self.initialiseData(kwargs.get('address'),kwargs.get('invNo'),kwargs.get('productCode'))
 
         elif(kwargs.get('transactions') is not None):
 
@@ -147,7 +149,7 @@ class FP_Tree:
 
     def display(self):
         ordereditems=[v for v in sorted(self.freqItems,key=len)]
-        return ordereditems
+        self.finalList = ordereditems
         # for i in ordereditems:
         #     print(i)
 
@@ -183,7 +185,7 @@ class FP_Tree:
                         rules.append(rule)
 
         # rules = sorted(rules)
-        return rules
+        self.finalRules = rules
         # for i in rules:
         #     print(i[0],'=>',i[1],":",str(round(i[2]))+"%")
 
