@@ -164,12 +164,11 @@ class FP_Tree:
             supL=suppdata[key]
             L=list(key)
             subsets=[]
+
             for i in range(1,len(key)):
-                subsets.append(list(combinations(key,i)))
+                subsets=(list(combinations(key,i)))
 
-
-            for i in subsets:
-                for subset in i:
+                for subset in subsets:
 
                     S=list(subset)
                     LminusS=[i for i in L if i not in S]
@@ -179,19 +178,19 @@ class FP_Tree:
                     confidence=supL/supS
                     if confidence>=conf:
                         rule=(str(S),str(LminusS),confidence*100)
-                        rules.append(rule)
-
-        #rules = sorted(rules)
-        for i in rules:
-            print(i[0],'=>',i[1],":",str(round(i[2]))+"%")
+                        print(rule[0],'=>',rule[1],":",str(round(rule[2]))+"%")
 
 
 
 
 
-'''trans={1:['A','B','C','D','E'],2:['A','C','E'],3:['B','C','D'],4:['A','D','E']}
-obj=FP_Tree(transactions=trans,min=2)#address,TransID,ProductCode,minSup):
 
-obj=FP_Tree(address=r"F:\LetsCode\Machine learning\Book1.xlsx",TransID='InvoiceNo',ProductCode='StockCode',min=5)#address,TransID,ProductCode,minSup):
-obj.display()
-obj.displayRules()'''
+
+
+
+
+
+
+obj=FP_Tree(address=r"E:\Projects\machine Learning\Book1.xlsx",TransID='InvoiceNo',ProductCode='StockCode',min=5)#address,TransID,ProductCode,minSup):
+#obj.display()
+obj.displayRules()
