@@ -147,8 +147,9 @@ class FP_Tree:
 
     def display(self):
         ordereditems=[v for v in sorted(self.freqItems,key=len)]
-        for i in ordereditems:
-            print(i)
+        return ordereditems
+        # for i in ordereditems:
+        #     print(i)
 
     def displayRules(self,conf=0.8):
         suppdata={}
@@ -181,9 +182,10 @@ class FP_Tree:
                         rule=(str(S),str(LminusS),confidence*100)
                         rules.append(rule)
 
-        #rules = sorted(rules)
-        for i in rules:
-            print(i[0],'=>',i[1],":",str(round(i[2]))+"%")
+        # rules = sorted(rules)
+        return rules
+        # for i in rules:
+        #     print(i[0],'=>',i[1],":",str(round(i[2]))+"%")
 
 
 
