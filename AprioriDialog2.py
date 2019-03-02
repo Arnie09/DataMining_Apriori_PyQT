@@ -35,8 +35,7 @@ class Apriori_Window(object):
         self.AprioriInstance.finalRules[1]="No rules to display for the first list!"
         self.showList(self.AprioriInstance.allLs[self.a])
         print(self.a)
-        self.nextListBtn.clicked.connect(lambda:self.showList(self.AprioriInstance.allLs[self.a]))
-        self.rulesGenerator.clicked.connect(lambda:self.showRules(self.AprioriInstance.finalRules[self.b]))
+
 
         if(self.a == 1):
             self.rulesGenerator.setEnabled(False)
@@ -152,6 +151,8 @@ class Apriori_Window(object):
         self.InvoiceHeader.addItem('')
         self.InvoiceHeader.setStyleSheet("background-color: rgb(255, 255, 255);")
 
+        self.nextListBtn.clicked.connect(lambda:self.showList(self.AprioriInstance.allLs[self.a]))
+        self.rulesGenerator.clicked.connect(lambda:self.showRules(self.AprioriInstance.finalRules[self.b]))
 
 
         self.gridLayout.addWidget(self.InvoiceHeader, 3, 2, 1, 1)
