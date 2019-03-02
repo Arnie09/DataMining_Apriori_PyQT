@@ -10,9 +10,13 @@ class FP_MainWindow(object):
         self.MainWindow.close()
 
     def OpenFile(self):
-        self.name = QtWidgets.QFileDialog.getOpenFileName()
+        self.name = QtWidgets.QFileDialog.getOpenFileName(self.MainWindow, "Select File", "", "*.xlsx *.csv")
         self.path=self.name[0]
-        self.localdb=pd.read_excel(self.path)
+        self.extension = self.path[self.path.index("."):]
+        if(self.extension == '.xlsx'):
+            self.localdb=pd.read_excel(self.path)
+        else:
+            self.localdb = pd.read_csv(self.path)
         self.columnheader=list(self.localdb.columns.values)
 
         self.ProductNameHeader.addItems(self.columnheader)

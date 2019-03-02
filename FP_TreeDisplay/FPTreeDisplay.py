@@ -138,10 +138,9 @@ class FP_Tree:
             self.tree.add_edge(edge)
             self.round(nod.children[i])
 
-"""obj=FP_Tree(min=2,transactions={101:['A','B','D','E'],
+obj=FP_Tree(min=2,transactions={101:['A','B','D','E'],
                   102:['B','C','E'],
                   103:['A','B','D','E'],
                   104:['A','B','C','E'],
                   105:['A','B','C','D','E'],
                   106:['B','C','D']})
-"""
