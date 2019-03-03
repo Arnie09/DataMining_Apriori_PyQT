@@ -122,7 +122,7 @@ class apriori:
                     confidence = supL/supS
 
                     if confidence>=minconfi:
-                        rule=(str(S)+"=>"+str(LminusS)+": "+str(confidence*100)+"%")
+                        rule=(str(S)+"=>"+str(LminusS)+": "+str(round(confidence*100,2))+"%")
                         rules.append(rule)
         self.finalRules[a]=rules
 
