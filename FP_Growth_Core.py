@@ -186,10 +186,10 @@ class FP_Tree:
                         rule=(str(S),str(LminusS),confidence*100)
                         rules.append(rule)
 
-
+        # rules = sorted(rules)
         self.finalRules = rules
-        for i in rules:
-             print(i[0],'=>',i[1],":",str(round(i[2]))+"%")
+        # for i in rules:
+        #     print(i[0],'=>',i[1],":",str(round(i[2]))+"%")
 
 
 
