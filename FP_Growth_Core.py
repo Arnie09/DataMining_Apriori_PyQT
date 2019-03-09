@@ -42,7 +42,7 @@ class FP_Tree:
 
 
         self.mineTree(self.mainTree,self.mainHeadertable,[],math.inf) #Mining the main tree
-        self.display()
+        #self.display()
 
 
     def formatdata(self):
@@ -151,7 +151,7 @@ class FP_Tree:
     def display(self):
         ordereditems=[v for v in sorted(self.freqItems,key=len)]
         self.finalList = ordereditems
-        self.displayRules()
+        #self.displayRules()
         # for i in ordereditems:
         #     print(i)
 
@@ -189,10 +189,14 @@ class FP_Tree:
         # rules = sorted(rules)
         self.finalRules = rules
         # for i in rules:
+<<<<<<< HEAD
         #     print(i[0],'=>',i[1],":",str(round(i[2]))+"%")
+=======
+        #      print(i[0],'=>',i[1],":",str(round(i[2]))+"%")
+>>>>>>> 26e883706cca24857d1647040cdd58c953a30e4f
 
 
 
 
 
-obj=FP_Tree(address=r"E:\Projects\Machine learning\Book1.xlsx",invNo='InvoiceNo',productCode='StockCode',min=5)#address,TransID,ProductCode,minSup):
+#obj=FP_Tree(address=r"E:\Projects\Machine learning\Book1.xlsx",invNo='InvoiceNo',productCode='StockCode',min=5)#address,TransID,ProductCode,minSup):

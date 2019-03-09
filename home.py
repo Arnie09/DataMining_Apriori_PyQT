@@ -17,6 +17,7 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.FPGrowth)
         self.FPGrowth.show()
 
+
     def toQuit(self):
         sys.exit()
 
