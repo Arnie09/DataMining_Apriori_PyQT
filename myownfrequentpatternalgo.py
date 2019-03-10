@@ -175,7 +175,9 @@ class FP_Tree:
             rules=[]
             self.loop(Freqset,Freqset,rules,supL)
             for rule in rules:
+                count+=1
                 print(rule[0],'=>',rule[1],str(round(rule[2]))+"%")
+                print(count)
 
 
 
@@ -186,6 +188,6 @@ class FP_Tree:
 
 
 
-obj=FP_Tree(address=r"E:/Projects/machine Learning/Book1.xlsx",TransID="InvoiceNo",ProductCode="StockCode",min=5)#address,TransID,ProductCode,minSup):
+obj=FP_Tree(address=r"F:\LetsCode\Machine learning\Book1.xlsx",TransID="InvoiceNo",ProductCode="StockCode",min=4)#address,TransID,ProductCode,minSup):
 #obj.display()
 obj.displayRules1()

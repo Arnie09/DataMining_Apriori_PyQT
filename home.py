@@ -2,6 +2,7 @@ from AprioriDialog2 import Apriori_Window
 from FPDialog import FP_MainWindow
 from Demo import Demo_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
+from DemoFPv2 import Ui_FPDemo
 
 
 class Ui_MainWindow(object):
@@ -17,6 +18,11 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.FPGrowth)
         self.FPGrowth.show()
 
+    def fp_demo(self):
+        self.FPDemo = QtWidgets.QMainWindow()
+        self.FPDemoUI = Ui_FPDemo()
+        self.FPDemoUI.setupUi(self.FPDemo)
+        self.FPDemo.show()
 
     def toQuit(self):
         sys.exit()
@@ -64,6 +70,7 @@ class Ui_MainWindow(object):
 
         self.InfoFPButton = QtWidgets.QPushButton(self.centralwidget)
         self.InfoFPButton.setObjectName("InfoFPButton")
+        self.InfoFPButton.clicked.connect(self.fp_demo)
         self.verticalLayout.addWidget(self.InfoFPButton)
         self.TryOutFPGrowthButton = QtWidgets.QPushButton(self.centralwidget)
         self.TryOutFPGrowthButton.setObjectName("TryOutFPGrowthButton")
