@@ -21,6 +21,7 @@ for rollNo in dataFrame.index:
     if(SUBJECTS_WITH_GRADE_D !=[]):
          MAIN_LIST[rollNo]=SUBJECTS_WITH_GRADE_D
 
+
 obj=FP_Tree(min=18,transactions=MAIN_LIST)
 #obj.display()
 obj.displayRules()

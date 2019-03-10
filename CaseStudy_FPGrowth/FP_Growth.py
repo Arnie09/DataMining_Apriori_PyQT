@@ -159,7 +159,7 @@ class FP_Tree:
             self.freqItems[i]=[v for v in sorted(self.freqItems[i][:-1],key=k.index)]+[t]
         for i in self.freqItems:
             suppdata[tuple(i[:-1])]=i[-1]
-
+        #print(suppdata)
         for key in suppdata:
             supL=suppdata[key]
             L=list(key)

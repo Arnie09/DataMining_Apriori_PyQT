@@ -26,6 +26,7 @@ class FP_Tree:
         self.labelcount=0
         self.freqItems=[]
         self.dataSet={}
+        self.graphcount=1
 
         if(kwargs.get('address') is not None):
             self.initialiseData(kwargs.get('address'),kwargs.get('TransID'),kwargs.get('ProductCode'))
@@ -37,7 +38,7 @@ class FP_Tree:
 
         self.mainTree,self.mainHeadertable=self.createTree(self.dataSet,self.minSup)# main FP tree and HeaderTable are formed
 
-        self.displaytree(self.mainTree)
+        #self.displaytree(self.mainTree)
 
 
     def formatdata(self):
@@ -83,6 +84,7 @@ class FP_Tree:
             if(len(local)>0):
                 ordereditems=[v[0] for v in sorted(local.items(),key=lambda p:p[1],reverse=True)] #sorted w.r.t support count in descending order
                 self.updateTree(ordereditems,retTree,headerTable,trans[-1])
+                self.displaytree(retTree)
 
         return retTree,headerTable
 
@@ -107,27 +109,11 @@ class FP_Tree:
         nodeToTest.nodeLink = targetNode
 
 
-    def ascendTree(self,node,path): #A small function used by findPrefixPath function to climb the tree while recording the path till it reaches root node
-
-        if node.parent!=None:
-            path.append(node.name)
-            self.ascendTree(node.parent,path)
-
-    def findPrefixPath(self,basePat,node): #This function returns the conditional pattern bases for a give node
-        condPat=[]
-
-        while node!=None:
-            prefixpath=[]
-            self.ascendTree(node,prefixpath)
-            if len(prefixpath)>1:
-                condPat.append(prefixpath[1:]+[node.count])
-            node=node.nodeLink
-        return condPat
-
     def displaytree(self,node):
         self.tree = pydot.Dot(graph_type='digraph')
         self.round(node)
-        self.tree.write_png(os.path.join(sys.path[0],'graph.jpeg'))
+        self.tree.write_png(os.path.join(sys.path[0],'graph'+str(self.graphcount)+'.jpeg'))
+        self.graphcount+=1
 
 
     def round(self,nod):
@@ -141,6 +127,10 @@ class FP_Tree:
 obj=FP_Tree(min=2,transactions={101:['A','B','D','E'],
                   102:['B','C','E'],
                   103:['A','B','D','E'],
+<<<<<<< HEAD
+                  104:['A','B','C','E'],})
+=======
                   104:['A','B','C','E'],
                   105:['A','B','C','D','E'],
                   106:['B','C','D']})
+>>>>>>> 26e883706cca24857d1647040cdd58c953a30e4f
