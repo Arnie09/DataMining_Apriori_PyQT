@@ -1,10 +1,50 @@
-
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIcon, QPixmap
+from FPTreeDisplay import FP_Tree
+import os
+import sys
+from time import sleep
 
 class Ui_FPDemo(object):
+
+    def callFP(self):
+        self.transactions = {}
+        self.transactions[1] = self.Transaction_1.text().split(",")
+        self.transactions[2] = self.Transaction_2.text().split(",")
+        self.transactions[3] = self.Transaction_3.text().split(",")
+        self.transactions[4] = self.Transaction_4.text().split(",")
+        print(self.transactions)
+        self.mini = int(self.label_10.text())
+        print(self.mini)
+        self.FPobject = FP_Tree(min = self.mini,transactions = self.transactions)
+        sleep(1)
+        self.showPictures()
+
+    def showPictures(self):
+        print('yo yo')
+        pixmap1 = QtGui.QPixmap(os.getcwd()+'\images\graph1.png')
+        self.label_5.setPixmap(pixmap1)
+        pixmap2 = QtGui.QPixmap(os.getcwd()+'\images\graph2.png')
+        self.label_6.setPixmap(pixmap2)
+        pixmap3 = QtGui.QPixmap(os.getcwd()+'\images\graph3.png')
+        self.label_7.setPixmap(pixmap3)
+        pixmap4 = QtGui.QPixmap(os.getcwd()+'\images\graph4.png')
+        self.label_8.setPixmap(pixmap4)
+
+        self.label_5.resize(pixmap1.width(),pixmap1.height())
+        self.label_6.resize(pixmap2.width(),pixmap2.height())
+        self.label_7.resize(pixmap3.width(),pixmap3.height())
+        self.label_8.resize(pixmap4.width(),pixmap4.height())
+
+        self.label_5.raise_()
+        self.label_6.raise_()
+        self.label_7.raise_()
+        self.label_8.raise_()
+
     def setupUi(self, FPDemo):
         FPDemo.setObjectName("FPDemo")
-        FPDemo.resize(1059, 814)
+        FPDemo.resize(1100, 1000)
+        FPDemo.setStyleSheet("background-image: url(:/newPrefix/bcnd_fp.jpg);")
         self.centralwidget = QtWidgets.QWidget(FPDemo)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -38,29 +78,42 @@ class Ui_FPDemo(object):
         self.label_4.setObjectName("label_4")
         self.gridLayout.addWidget(self.label_4, 4, 0, 1, 1)
         self.FPButton = QtWidgets.QPushButton(self.centralwidget)
-        self.FPButton.setGeometry(QtCore.QRect(11, 129, 93, 28))
+        self.FPButton.setGeometry(QtCore.QRect(10, 190, 93, 28))
         self.FPButton.setObjectName("FPButton")
-        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect(450, 20, 57, 87))
-        self.layoutWidget.setObjectName("layoutWidget")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.layoutWidget)
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.label_8 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_8.setObjectName("label_8")
-        self.gridLayout_2.addWidget(self.label_8, 3, 0, 1, 1)
-        self.label_5 = QtWidgets.QLabel(self.layoutWidget)
+        self.FPButton.clicked.connect(self.callFP)
+        #self.FPButton.clicked.connect(self.showPictures)
+
+        self.horizontalSlider = QtWidgets.QSlider(self.centralwidget)
+        self.horizontalSlider.setGeometry(QtCore.QRect(10, 160, 160, 22))
+        self.horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider.setObjectName("horizontalSlider")
+        self.label_9 = QtWidgets.QLabel(self.centralwidget)
+        self.label_9.setGeometry(QtCore.QRect(10, 140, 55, 16))
+        self.label_9.setObjectName("label_9")
+        self.label_10 = QtWidgets.QLabel(self.centralwidget)
+        self.label_10.setGeometry(QtCore.QRect(190, 160, 55, 16))
+        self.label_10.setObjectName("label_10")
+        self.horizontalSlider_2 = QtWidgets.QSlider(self.centralwidget)
+        self.horizontalSlider_2.setGeometry(QtCore.QRect(10, 160, 160, 22))
+
+        '''setting max and min od slider'''
+        self.horizontalSlider_2.setMinimum(1)
+        self.horizontalSlider_2.setMaximum(4)
+
+        self.horizontalSlider_2.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_2.setObjectName("horizontalSlider_2")
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        self.label_5.setGeometry(QtCore.QRect(360, 30, 280, 320))
         self.label_5.setObjectName("label_5")
-        self.gridLayout_2.addWidget(self.label_5, 0, 0, 1, 1)
-        self.label_7 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_7.setObjectName("label_7")
-        self.gridLayout_2.addWidget(self.label_7, 2, 0, 1, 1)
-        self.label_6 = QtWidgets.QLabel(self.layoutWidget)
+        self.label_6 = QtWidgets.QLabel(self.centralwidget)
+        self.label_6.setGeometry(QtCore.QRect(750, 20, 280, 320))
         self.label_6.setObjectName("label_6")
-        self.gridLayout_2.addWidget(self.label_6, 1, 0, 1, 1)
-        self.layoutWidget.raise_()
-        self.gridLayoutWidget.raise_()
-        self.FPButton.raise_()
+        self.label_7 = QtWidgets.QLabel(self.centralwidget)
+        self.label_7.setGeometry(QtCore.QRect(360, 500, 280, 320))
+        self.label_7.setObjectName("label_7")
+        self.label_8 = QtWidgets.QLabel(self.centralwidget)
+        self.label_8.setGeometry(QtCore.QRect(750, 500, 280, 320))
+        self.label_8.setObjectName("label_8")
         FPDemo.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(FPDemo)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1059, 26))
@@ -71,6 +124,7 @@ class Ui_FPDemo(object):
         FPDemo.setStatusBar(self.statusbar)
 
         self.retranslateUi(FPDemo)
+        self.horizontalSlider_2.valueChanged['int'].connect(self.label_10.setNum)
         QtCore.QMetaObject.connectSlotsByName(FPDemo)
 
     def retranslateUi(self, FPDemo):
@@ -85,17 +139,5 @@ class Ui_FPDemo(object):
         self.Transaction_2.setText(_translate("FPDemo", "a,b,c"))
         self.label_4.setText(_translate("FPDemo", "Transaction 4 :"))
         self.FPButton.setText(_translate("FPDemo", "Run FP"))
-        self.label_8.setText(_translate("FPDemo", "TextLabel"))
-        self.label_5.setText(_translate("FPDemo", "TextLabel"))
-        self.label_7.setText(_translate("FPDemo", "TextLabel"))
-        self.label_6.setText(_translate("FPDemo", "TextLabel"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    FPDemo = QtWidgets.QMainWindow()
-    ui = Ui_FPDemo()
-    ui.setupUi(FPDemo)
-    FPDemo.show()
-    sys.exit(app.exec_())
+        self.label_9.setText(_translate("FPDemo", "Min :"))
+        self.label_10.setText(_translate("FPDemo", "1"))
