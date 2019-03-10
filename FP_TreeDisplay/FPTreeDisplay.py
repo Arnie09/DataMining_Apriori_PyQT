@@ -112,7 +112,7 @@ class FP_Tree:
     def displaytree(self,node):
         self.tree = pydot.Dot(graph_type='digraph')
         self.round(node)
-        self.tree.write_png(os.path.join(sys.path[0],'graph'+str(self.graphcount)+'.jpeg'))
+        self.tree.write_png(os.path.join(sys.path[0],'graph'+str(self.graphcount)+'.png'))
         self.graphcount+=1
 
 
@@ -127,10 +127,4 @@ class FP_Tree:
 obj=FP_Tree(min=2,transactions={101:['A','B','D','E'],
                   102:['B','C','E'],
                   103:['A','B','D','E'],
-<<<<<<< HEAD
                   104:['A','B','C','E'],})
-=======
-                  104:['A','B','C','E'],
-                  105:['A','B','C','D','E'],
-                  106:['B','C','D']})
->>>>>>> 26e883706cca24857d1647040cdd58c953a30e4f
