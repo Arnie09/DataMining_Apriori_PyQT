@@ -3,7 +3,7 @@ import pandas as pd
 from Apriori_core import apriori
 from FP_Growth_Core import FP_Tree
 
-class Ui_MainWindow(object):
+class GeneralisedWindow(object):
 
     columnheader=[]
 
@@ -238,7 +238,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = GeneralisedWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
