@@ -97,6 +97,7 @@ class Demo_MainWindow(object):
         self.MainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1024, 768)
+        MainWindow.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0.532, y1:0, x2:0.538, y2:1, stop:0 rgba(119, 119, 119, 255), stop:1 rgba(255, 255, 255, 255));")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
@@ -159,24 +160,28 @@ class Demo_MainWindow(object):
         self.Transaction_1 = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.Transaction_1.setObjectName("Transaction_1")
         self.Transaction_1.setText("a,b,c,d")
+        self.Transaction_1.setStyleSheet("background-color: rgb(255, 255, 255);")
 
         self.gridLayout.addWidget(self.Transaction_1, 0, 1, 1, 1)
 
         self.Transaction_2 = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.Transaction_2.setObjectName("Transaction_2")
         self.Transaction_2.setText("a,b,c")
+        self.Transaction_2.setStyleSheet("background-color: rgb(255, 255, 255);")
 
         self.gridLayout.addWidget(self.Transaction_2, 2, 1, 1, 1)
 
         self.Transaction_3 = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.Transaction_3.setObjectName("Transaction_3")
         self.Transaction_3.setText("b,c")
+        self.Transaction_3.setStyleSheet("background-color: rgb(255, 255, 255);")
 
         self.gridLayout.addWidget(self.Transaction_3, 3, 1, 1, 1)
 
         self.Transaction_4 = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.Transaction_4.setObjectName("Transaction_4")
         self.Transaction_4.setText("d,b")
+        self.Transaction_4.setStyleSheet("background-color: rgb(255, 255, 255);")
 
         self.gridLayout.addWidget(self.Transaction_4, 4, 1, 1, 1)
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
@@ -194,11 +199,13 @@ class Demo_MainWindow(object):
 
         self.ListOutput = QtWidgets.QTextBrowser(self.gridLayoutWidget_2)
         self.ListOutput.setObjectName("ListOutput")
+        self.ListOutput.setStyleSheet("background-color: rgb(255, 255, 255);")
 
         self.gridLayout_2.addWidget(self.ListOutput, 1, 0, 1, 1)
 
         self.RulesOutput = QtWidgets.QTextBrowser(self.gridLayoutWidget_2)
         self.RulesOutput.setObjectName("RulesOutput")
+        self.RulesOutput.setStyleSheet("background-color: rgb(255, 255, 255);")
 
         self.gridLayout_2.addWidget(self.RulesOutput, 1, 1, 1, 1)
 
@@ -214,6 +221,7 @@ class Demo_MainWindow(object):
         self.AprioriButton.setGeometry(QtCore.QRect(650, 310, 301, 28))
         self.AprioriButton.setObjectName("AprioriButton")
         self.AprioriButton.clicked.connect(self.methodGenerateList)
+        self.AprioriButton.setStyleSheet("background: rbg(0,0,0); color: rgb(255,255,255)")
 
         self.generateList.clicked.connect(lambda:self.showList(self.AprioriInstance.allLs[self.a]))
         self.generateRules.clicked.connect(lambda:self.showRules(self.AprioriInstance.finalRules[self.b]))
