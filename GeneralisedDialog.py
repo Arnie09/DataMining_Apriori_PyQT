@@ -26,6 +26,7 @@ class GeneralisedWindow(object):
         self.ShowPath.setText(self.path)
         print(self.path)
 
+
     def run(self):
         print(self.AlgorithmPicker.currentText())
         if(self.AlgorithmPicker.currentText() == "Apriori Algorithm"):

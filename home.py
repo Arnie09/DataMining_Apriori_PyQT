@@ -1,4 +1,4 @@
-from GeneralisedDialog import GeneralisedWindow
+from GeneralisedDialogRevamped import GeneralisedWindow
 from Demo import Demo_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from DemoFPv2 import Ui_FPDemo

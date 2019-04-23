@@ -3,13 +3,17 @@ from itertools import combinations
 class apriori:
 
     def __init__(self,**kwargs):
-        print("fortnite")
-        self.min=kwargs.get('min')
+
+        self.rulesLength = kwargs.get('rules_len')
+        self.min = kwargs.get('min')
+        self.minConf=kwargs.get('minConf')
+        self.maxConf=kwargs.get('maxConf')
+        self.rulesMin = kwargs.get('rulesMin')
         if(kwargs.get('address') is not None):
             self.dataset=pd.read_excel(kwargs.get('address'))
-            self.columnheader=list(self.dataset.columns.values)
-            self.invNo=self.dataset[kwargs.get('invNo')] #list of the invoice no.
-            self.productcode=self.dataset[kwargs.get('productCode')] #list of all the product codes
+            self.index = kwargs.get('invNo')
+            self.dataset.set_index(self.index,inplace = True)
+            self.columnheader=list(self.dataset.columns)
 
         if(kwargs.get('transactions') is not None):
             self.transaction = kwargs.get('transactions')
@@ -30,34 +34,28 @@ class apriori:
             self.createL1()
             self.createLs()
 
-
-
-    # def __init__(self,min,transactions,productlist):
-    #     print("Apex")
-    #     self.min = min
-    #     self.transaction=transactions  #to store all the transactions w.r.t invNo
-    #     self.uniqproductcode=productlist #storing the codes of each product only once
-    #     self.allLs={}
-    #     self.finalL={}
-    #     self.finalRules={}
-    #     self.createL1()
-    #     self.createLs()
-
-
-
-
-
     def initialise(self):#to store the data required in transaction and uniqproductcode
-        for item in self.productcode:
-            if item not in self.uniqproductcode:
-                self.uniqproductcode.append(item)
 
+        print(self.columnheader)
         #All products with same invoice no. are listed together
-        for i in range(0,len(self.invNo)):
-            if self.invNo[i] not in self.transaction:
-                self.transaction[self.invNo[i]]=[self.productcode[i]]
+        for items in self.dataset.index:
+            print(self.transaction)
+            if(items not in self.transaction):
+                items_in_the_row = []
+                for headers in self.columnheader:
+                    product = self.dataset.loc[items][headers]
+                    items_in_the_row.append(product)
+                    if product not in self.uniqproductcode:
+                        self.uniqproductcode.append(product)
+                self.transaction[items] = items_in_the_row
             else:
-                self.transaction[self.invNo[i]]=self.transaction[self.invNo[i]]+[self.productcode[i]]
+                items_in_the_row = []
+                for headers in self.columnheader:
+                    product = self.dataset.loc[items][headers]
+                    items_in_the_row.append(product)
+                    if product not in self.uniqproductcode:
+                        self.uniqproductcode.append(product)
+                self.transaction[items].append(items_in_the_row)
 
     def createL1(self):
 
@@ -79,7 +77,7 @@ class apriori:
         List=self.allLs[1]
         a=1
 
-        while(len(List)!= 0):
+        while(len(List)!= 0 and a<=self.rulesLength):
             a+=1
             List=self.createList(List,a)
             self.allLs[a]=List
@@ -126,7 +124,8 @@ class apriori:
                 subsets.append(list(combinations(keys,i))) #all non-empty subsets created and stored as tuples in subsets list
 
             #we will use S to store each subset. L stores the main set
-            minconfi=0.8
+            minconfi=self.minConf
+            maxconfi = self.maxConf
             for eachlist in subsets:
                 for subset in eachlist:
                     S=list(subset)
@@ -134,21 +133,10 @@ class apriori:
                     supS=self.allLs[len(subset)][subset]
                     confidence = supL/supS
 
-                    if confidence>=minconfi:
+                    if confidence>=minconfi and confidence<=maxconfi:
                         rule=(str(S)+"=>"+str(LminusS)+": "+str(confidence*100)+"%")
                         rules.append(rule)
         self.finalRules[a]=rules
-
-
-
-
-    # def displayLs(self):
-    #     for i in self.allLs:
-    #         if(len(self.allLs[i])>0):
-    #             print("\nThe elements of L%d are : "%i)
-    #             for j in self.allLs[i]:
-    #                 print(j," : ",self.allLs[i][j])
-
 
     def comb(self,A,B): #It combines two lists without keeping duplicates while maintaining the order
         c=A+[]
