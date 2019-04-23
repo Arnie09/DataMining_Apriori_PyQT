@@ -3,8 +3,13 @@ from itertools import combinations
 class apriori:
 
     def __init__(self,**kwargs):
-        print("fortnite")
+
+        if(kwargs.get('rules_len') is not None):
+            self.rulesLength = kwargs.get('rules_len')
+        else:
+            self.rulesLength = 999
         self.min=kwargs.get('min')
+        self.rulesMin = kwargs.get('rulesMin')
         if(kwargs.get('address') is not None):
             self.dataset=pd.read_excel(kwargs.get('address'))
             self.columnheader=list(self.dataset.columns.values)
@@ -29,23 +34,6 @@ class apriori:
             self.initialise()
             self.createL1()
             self.createLs()
-
-
-
-    # def __init__(self,min,transactions,productlist):
-    #     print("Apex")
-    #     self.min = min
-    #     self.transaction=transactions  #to store all the transactions w.r.t invNo
-    #     self.uniqproductcode=productlist #storing the codes of each product only once
-    #     self.allLs={}
-    #     self.finalL={}
-    #     self.finalRules={}
-    #     self.createL1()
-    #     self.createLs()
-
-
-
-
 
     def initialise(self):#to store the data required in transaction and uniqproductcode
         for item in self.productcode:
@@ -79,7 +67,7 @@ class apriori:
         List=self.allLs[1]
         a=1
 
-        while(len(List)!= 0):
+        while(len(List)!= 0 and a<=self.rulesLength):
             a+=1
             List=self.createList(List,a)
             self.allLs[a]=List
@@ -126,7 +114,7 @@ class apriori:
                 subsets.append(list(combinations(keys,i))) #all non-empty subsets created and stored as tuples in subsets list
 
             #we will use S to store each subset. L stores the main set
-            minconfi=0.8
+            minconfi=self.rulesMin
             for eachlist in subsets:
                 for subset in eachlist:
                     S=list(subset)
@@ -138,17 +126,6 @@ class apriori:
                         rule=(str(S)+"=>"+str(LminusS)+": "+str(confidence*100)+"%")
                         rules.append(rule)
         self.finalRules[a]=rules
-
-
-
-
-    # def displayLs(self):
-    #     for i in self.allLs:
-    #         if(len(self.allLs[i])>0):
-    #             print("\nThe elements of L%d are : "%i)
-    #             for j in self.allLs[i]:
-    #                 print(j," : ",self.allLs[i][j])
-
 
     def comb(self,A,B): #It combines two lists without keeping duplicates while maintaining the order
         c=A+[]
