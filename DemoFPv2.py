@@ -46,7 +46,7 @@ class Ui_FPDemo(object):
     def setupUi(self, FPDemo):
         FPDemo.setObjectName("FPDemo")
         FPDemo.resize(1100, 1000)
-        FPDemo.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0.532, y1:0, x2:0.538, y2:1, stop:0 rgba(119, 119, 119, 255), stop:1 rgba(255, 255, 255, 255));")
+        FPDemo.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0.532, y1:0, x2:0.538, y2:1, stop:0 rgba(233, 234, 194,255), stop:1 rgba(255, 255, 255, 255));")
         self.centralwidget = QtWidgets.QWidget(FPDemo)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)

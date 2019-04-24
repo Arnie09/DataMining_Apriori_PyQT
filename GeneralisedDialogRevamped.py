@@ -87,16 +87,12 @@ class GeneralisedWindow(object):
 
     def search(self):
 
-        print("here")
         if(len(self.rule_to_search.text())>0):
             subjects = self.rule_to_search.text().split(",")
             for i in range(len(subjects)):
                 subjects[i] = subjects[i].strip()
-            print(subjects)
             for relation in self.relations:
-                print(relation)
                 if(all(("'"+subject+"'") in relation for subject in subjects)):
-                    print(relation)
                     str = "Relationship between : "
                     for subs in relation:
                         str+=subs[1:-1]+", "
@@ -251,9 +247,9 @@ class GeneralisedWindow(object):
         self.searchButton.setText(_translate("MainWindow", "Search"))
         self.index_label.setText(_translate("MainWindow", "Select the Index Column of the database :"))
         self.max_length_rule_label.setText(_translate("MainWindow", "Maximum length of the rule :"))
-        self.min_con_label.setText(_translate("MainWindow", "Minimum confidence:"))
+        self.min_con_label.setText(_translate("MainWindow", "Enter Minimum confidence in percentage :"))
         self.save_to_file_button.setText(_translate("MainWindow", "Save output to an external file."))
-        self.max_con_label.setText(_translate("MainWindow", "Maximum confidence:"))
+        self.max_con_label.setText(_translate("MainWindow", "Enter Maximum confidence in percentage :"))
         self.min_freq_label.setText(_translate("MainWindow", "Minimum_frequency:"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
