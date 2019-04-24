@@ -79,7 +79,11 @@ class GeneralisedWindow(object):
                             else:
                                 self.relations[subjects_in_this_rule].append(main_stuff)
 
-        print(self.relations)
+        for relation in self.relations.keys():
+            str = "Relationship between : "
+            for subjects in relation:
+                str+=subjects[1:-1]+", "
+            self.OutputRules.append(str+"\n")
 
     def setupUi(self, MainWindow):
         self.MainWindow = MainWindow
