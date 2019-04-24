@@ -34,7 +34,6 @@ class apriori:
             self.createLs()
         else:
             self.preprocess()
-            #self.initialise()
             self.createL1()
             self.createLs()
 
@@ -69,27 +68,6 @@ class apriori:
 
         self.transaction = MAIN_LIST
         self.uniqproductcode = content
-
-    # def initialise(self):#to store the data required in transaction and uniqproductcode
-    #     #All products with same invoice no. are listed together
-    #     for items in self.dataset.index:
-    #         print(self.transaction)
-    #         if(items not in self.transaction):
-    #             items_in_the_row = []
-    #             for headers in self.columnheader:
-    #                 product = self.dataset.loc[items][headers]
-    #                 items_in_the_row.append(product)
-    #                 if product not in self.uniqproductcode:
-    #                     self.uniqproductcode.append(product)
-    #             self.transaction[items] = items_in_the_row
-    #         else:
-    #             items_in_the_row = []
-    #             for headers in self.columnheader:
-    #                 product = self.dataset.loc[items][headers]
-    #                 items_in_the_row.append(product)
-    #                 if product not in self.uniqproductcode:
-    #                     self.uniqproductcode.append(product)
-    #             self.transaction[items].append(items_in_the_row)
 
     def createL1(self):
 
