@@ -136,8 +136,8 @@ class apriori:
                 subsets.append(list(combinations(keys,i))) #all non-empty subsets created and stored as tuples in subsets list
 
             #we will use S to store each subset. L stores the main set
-            minconfi=self.minConf
-            maxconfi = self.maxConf
+            minconfi=self.minConf/100
+            maxconfi = self.maxConf/100
             for eachlist in subsets:
                 for subset in eachlist:
                     S=list(subset)

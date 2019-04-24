@@ -25,12 +25,13 @@ class GeneralisedWindow(object):
         print(self.path)
 
     def run(self):
-        print(self.AlgorithmPicker.currentText())
-        if(self.AlgorithmPicker.currentText() == "Apriori Algorithm"):
-            '''do apriori work'''
-            self.AprioriInstance = apriori(address=self.path,min = int(self.min_freq_tb.text()),minConf=float(self.MinConf.text()),maxConf = float(self.MaxConf.text()),invNo=self.index_combo_box.currentText(),rules_len = int(self.ruleLength_tb.text()))
-            self.results = self.AprioriInstance.finalRules
-            self.output()
+        if(len(self.path)>0 and len(self.min_freq_tb.text())>0 and int(self.MinConf.text())>=0 and int(self.MinConf.text())<=100 and int(self.MaxConf.text())>=0 and int(self.MaxConf.text())<=100 and int(self.MaxConf.text())>int(self.MinConf.text()) and int(self.ruleLength_tb.text())>0):
+            print(self.AlgorithmPicker.currentText())
+            if(self.AlgorithmPicker.currentText() == "Apriori Algorithm"):
+                '''do apriori work'''
+                self.AprioriInstance = apriori(address=self.path,min = int(self.min_freq_tb.text()),minConf=int(self.MinConf.text()),maxConf = int(self.MaxConf.text()),invNo=self.index_combo_box.currentText(),rules_len = int(self.ruleLength_tb.text()))
+                self.results = self.AprioriInstance.finalRules
+                self.output()
 
     def output(self):
 
@@ -102,6 +103,7 @@ class GeneralisedWindow(object):
                     self.searched_output_rules.append("\n")
 
     def setupUi(self, MainWindow):
+        self.path = ""
         self.MainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1281, 954)
@@ -253,11 +255,11 @@ class GeneralisedWindow(object):
         self.length_of_the_rule_to_search_label.setText(_translate("MainWindow", "Length of the rule :"))
         self.Run.setText(_translate("MainWindow", "Run"))
         self.label.setText(_translate("MainWindow", "Algorithm To Use :"))
-        self.max_con_label.setText(_translate("MainWindow", "Maximum confidence:"))
-        self.min_con_label.setText(_translate("MainWindow", "Minimum confidence:"))
+        self.max_con_label.setText(_translate("MainWindow", "Enter the Maximum confidence in percentage:"))
+        self.min_con_label.setText(_translate("MainWindow", "Enter the Minimum confidence in percentage:"))
         self.save_to_file_button.setText(_translate("MainWindow", "Save output to an external file."))
         self.index_label.setText(_translate("MainWindow", "Select the Index Column of the database :"))
-        self.min_freq_label.setText(_translate("MainWindow", "Minimum_frequency:"))
+        self.min_freq_label.setText(_translate("MainWindow", "Minimum frequency:"))
         self.searchButton.setText(_translate("MainWindow", "Search"))
         self.label_2.setText(_translate("MainWindow", "You have Entered :"))
         self.max_length_rule_label.setText(_translate("MainWindow", "Maximum length of the rule :"))
