@@ -85,6 +85,26 @@ class GeneralisedWindow(object):
                 str+=subjects[1:-1]+", "
             self.OutputRules.append(str+"\n")
 
+    def search(self):
+
+        print("here")
+        if(len(self.rule_to_search.text())>0):
+            subjects = self.rule_to_search.text().split(",")
+            for i in range(len(subjects)):
+                subjects[i] = subjects[i].strip()
+            print(subjects)
+            for relation in self.relations:
+                print(relation)
+                if(all(("'"+subject+"'") in relation for subject in subjects)):
+                    print(relation)
+                    str = "Relationship between : "
+                    for subs in relation:
+                        str+=subs[1:-1]+", "
+                    self.searched_output_rules.append(str)
+                    for items in self.relations[relation]:
+                        self.searched_output_rules.append(items)
+                    self.searched_output_rules.append("\n")
+
     def setupUi(self, MainWindow):
         self.MainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
@@ -134,9 +154,11 @@ class GeneralisedWindow(object):
         self.index_combo_box = QtWidgets.QComboBox(self.centralwidget)
         self.index_combo_box.setObjectName("index_combo_box")
         self.gridLayout.addWidget(self.index_combo_box, 3, 1, 1, 1)
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setObjectName("pushButton")
-        self.gridLayout.addWidget(self.pushButton, 18, 2, 1, 1)
+        self.searchButton = QtWidgets.QPushButton(self.centralwidget)
+        self.searchButton.setObjectName("searchButton")
+        self.searchButton.clicked.connect(self.search)
+
+        self.gridLayout.addWidget(self.searchButton, 18, 2, 1, 1)
         self.index_label = QtWidgets.QLabel(self.centralwidget)
         self.index_label.setObjectName("index_label")
         self.gridLayout.addWidget(self.index_label, 2, 1, 1, 1)
@@ -170,12 +192,12 @@ class GeneralisedWindow(object):
         self.MinConf.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.MinConf.setObjectName("MinConf")
         self.gridLayout.addWidget(self.MinConf, 11, 1, 1, 1)
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setStyleSheet("background-color: rgb(80, 80, 80);\n"
+        self.save_to_file_button = QtWidgets.QPushButton(self.centralwidget)
+        self.save_to_file_button.setStyleSheet("background-color: rgb(80, 80, 80);\n"
 "font: 75 8pt \"MS Shell Dlg 2\";\n"
 "color: rgb(255, 255, 255);")
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.gridLayout.addWidget(self.pushButton_2, 13, 2, 1, 1)
+        self.save_to_file_button.setObjectName("save_to_file_button")
+        self.gridLayout.addWidget(self.save_to_file_button, 13, 2, 1, 1)
         self.max_con_label = QtWidgets.QLabel(self.centralwidget)
         self.max_con_label.setObjectName("max_con_label")
         self.gridLayout.addWidget(self.max_con_label, 12, 1, 1, 1)
@@ -226,11 +248,11 @@ class GeneralisedWindow(object):
         self.label_6.setText(_translate("MainWindow", "All Rules :"))
         self.label.setText(_translate("MainWindow", "Algorithm To Use :"))
         self.Search_rule_label.setText(_translate("MainWindow", "Search Rule : "))
-        self.pushButton.setText(_translate("MainWindow", "Search"))
+        self.searchButton.setText(_translate("MainWindow", "Search"))
         self.index_label.setText(_translate("MainWindow", "Select the Index Column of the database :"))
         self.max_length_rule_label.setText(_translate("MainWindow", "Maximum length of the rule :"))
         self.min_con_label.setText(_translate("MainWindow", "Minimum confidence:"))
-        self.pushButton_2.setText(_translate("MainWindow", "Save output to an external file."))
+        self.save_to_file_button.setText(_translate("MainWindow", "Save output to an external file."))
         self.max_con_label.setText(_translate("MainWindow", "Maximum confidence:"))
         self.min_freq_label.setText(_translate("MainWindow", "Minimum_frequency:"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
