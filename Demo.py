@@ -4,7 +4,7 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 import tkinter
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-from Apriori_core import apriori
+from Apriori_core_demo import apriori
 
 import random
 
