@@ -87,12 +87,12 @@ class GeneralisedWindow(object):
 
     def search(self):
 
-        if(len(self.rule_to_search.text())>0):
+        if(len(self.rule_to_search.text())>0 and int(self.length_of_the_rule_to_search_tb.text())>0 and int(self.length_of_the_rule_to_search_tb.text())<=int(self.ruleLength_tb.text())):
             subjects = self.rule_to_search.text().split(",")
             for i in range(len(subjects)):
                 subjects[i] = subjects[i].strip()
             for relation in self.relations:
-                if(all(("'"+subject+"'") in relation for subject in subjects)):
+                if(all(("'"+subject+"'") in relation for subject in subjects) and len(relation) == int(self.length_of_the_rule_to_search_tb.text())):
                     str = "Relationship between : "
                     for subs in relation:
                         str+=subs[1:-1]+", "
