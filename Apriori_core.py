@@ -12,7 +12,10 @@ class apriori:
         if(kwargs.get('address') is not None):
             self.dataset=pd.read_excel(kwargs.get('address'))
             self.index = kwargs.get('invNo')
+
+            '''index has been set here'''
             self.dataset.set_index(self.index,inplace = True)
+
             self.columnheader=list(self.dataset.columns)
 
         if(kwargs.get('transactions') is not None):
@@ -30,32 +33,63 @@ class apriori:
             self.createL1()
             self.createLs()
         else:
-            self.initialise()
+            self.preprocess()
+            #self.initialise()
             self.createL1()
             self.createLs()
 
-    def initialise(self):#to store the data required in transaction and uniqproductcode
+    def preprocess(self):
+        MAIN_LIST={}
+        content = []
+        SUBJECTS = self.columnheader
 
-        print(self.columnheader)
-        #All products with same invoice no. are listed together
-        for items in self.dataset.index:
-            print(self.transaction)
-            if(items not in self.transaction):
-                items_in_the_row = []
-                for headers in self.columnheader:
-                    product = self.dataset.loc[items][headers]
-                    items_in_the_row.append(product)
-                    if product not in self.uniqproductcode:
-                        self.uniqproductcode.append(product)
-                self.transaction[items] = items_in_the_row
-            else:
-                items_in_the_row = []
-                for headers in self.columnheader:
-                    product = self.dataset.loc[items][headers]
-                    items_in_the_row.append(product)
-                    if product not in self.uniqproductcode:
-                        self.uniqproductcode.append(product)
-                self.transaction[items].append(items_in_the_row)
+        '''filling up the dictionary with empty lists'''
+        for students in self.dataset.index:
+            MAIN_LIST[students] = []
+
+        '''grouping of marks into good,average,poor based on the higest and lowest in the subjects is done here'''
+        for subjects in SUBJECTS:
+            marks = sorted(self.dataset[subjects])
+            min,max = marks[0], marks[len(marks)-1]
+            diff= (max-min)/3
+            for students in self.dataset.index:
+                scores = ""
+                marks = self.dataset.loc[students][subjects]
+                String = ""
+                if(marks>=max - diff):
+                    String = "Good marks in "
+                elif(marks>= min+diff and marks<max-diff):
+                    String = "Average marks in "
+                else:
+                    String = "Poor marks in "
+                scores = (String+subjects)
+                MAIN_LIST[students].append(scores)
+                if(scores not in content):
+                    content.append(scores)
+
+        self.transaction = MAIN_LIST
+        self.uniqproductcode = content
+
+    # def initialise(self):#to store the data required in transaction and uniqproductcode
+    #     #All products with same invoice no. are listed together
+    #     for items in self.dataset.index:
+    #         print(self.transaction)
+    #         if(items not in self.transaction):
+    #             items_in_the_row = []
+    #             for headers in self.columnheader:
+    #                 product = self.dataset.loc[items][headers]
+    #                 items_in_the_row.append(product)
+    #                 if product not in self.uniqproductcode:
+    #                     self.uniqproductcode.append(product)
+    #             self.transaction[items] = items_in_the_row
+    #         else:
+    #             items_in_the_row = []
+    #             for headers in self.columnheader:
+    #                 product = self.dataset.loc[items][headers]
+    #                 items_in_the_row.append(product)
+    #                 if product not in self.uniqproductcode:
+    #                     self.uniqproductcode.append(product)
+    #             self.transaction[items].append(items_in_the_row)
 
     def createL1(self):
 

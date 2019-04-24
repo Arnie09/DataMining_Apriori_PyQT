@@ -28,13 +28,20 @@ class GeneralisedWindow(object):
         if(self.AlgorithmPicker.currentText() == "Apriori Algorithm"):
             '''do apriori work'''
             self.AprioriInstance = apriori(address=self.path,min = int(self.min_freq_tb.text()),minConf=float(self.MinConf.text()),maxConf = float(self.MaxConf.text()),invNo=self.index_combo_box.currentText(),rules_len = int(self.ruleLength_tb.text()))
+            self.results = self.AprioriInstance.finalRules
             print(self.AprioriInstance.finalRules)
+            #output()
+
+    def output(self):
+        '''show the output of the program'''
+
+        PATTERNS = []
 
     def setupUi(self, MainWindow):
         self.MainWindow = MainWindow
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1097, 885)
-        MainWindow.setStyleSheet("background-color:qlineargradient(spread:pad, x1:0.532, y1:0, x2:0.538, y2:1, stop:0 rgba(119, 119, 119, 255), stop:1 rgba(255, 255, 255, 255))\n"
+        MainWindow.setStyleSheet("background-color:qlineargradient(spread:pad, x1:0.532, y1:0, x2:0.538, y2:1, stop:0 rgba(233, 234, 194,255), stop:1 rgba(255, 255, 255, 255))\n"
 "\n"
 "\n"
 "")
@@ -51,7 +58,7 @@ class GeneralisedWindow(object):
 
         self.gridLayout.addWidget(self.Run, 11, 2, 1, 1)
         self.OutputRules = QtWidgets.QTextBrowser(self.centralwidget)
-        self.OutputRules.setStyleSheet("background-color: rgb(200, 200, 200);\n"
+        self.OutputRules.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "")
         self.OutputRules.setObjectName("OutputRules")
         self.gridLayout.addWidget(self.OutputRules, 17, 1, 3, 1)
@@ -97,7 +104,7 @@ class GeneralisedWindow(object):
         self.MaxConf.setObjectName("MaxConf")
         self.gridLayout.addWidget(self.MaxConf, 13, 1, 1, 1)
         self.searched_output_rules = QtWidgets.QTextBrowser(self.centralwidget)
-        self.searched_output_rules.setStyleSheet("background-color: rgb(200, 200, 200);")
+        self.searched_output_rules.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.searched_output_rules.setObjectName("searched_output_rules")
         self.gridLayout.addWidget(self.searched_output_rules, 19, 2, 1, 1)
 
