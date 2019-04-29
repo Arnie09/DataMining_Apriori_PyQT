@@ -87,7 +87,7 @@ class GeneralisedWindow(object):
             self.OutputRules.append(str+"\n")
 
     def search(self):
-
+        self.searched_output_rules.clear()
         if(len(self.rule_to_search.text())>0 and int(self.length_of_the_rule_to_search_tb.text())>0 and int(self.length_of_the_rule_to_search_tb.text())<=int(self.ruleLength_tb.text())):
             subjects = self.rule_to_search.text().split(",")
             for i in range(len(subjects)):
