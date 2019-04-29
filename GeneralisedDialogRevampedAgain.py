@@ -73,7 +73,7 @@ class GeneralisedWindow(object):
 
                     subjects_in_this_rule = tuple(sorted([subject for subject in left_subjects]+[subject for subject in right_subjects]))
 
-                    if all(self.Chronological_order[subject_in_left[1:-1]] < self.Chronological_order[subject_in_right[1:-1]] for subject_in_left in left_subjects for subject_in_right in right_subjects ):
+                    if all(self.Chronological_order[subject_in_left[1:-1]] < self.Chronological_order[subject_in_right[1:-1]] for subject_in_left in left_subjects for subject_in_right in right_subjects)  and len(left_subjects)>=len(right_subjects):
                         if(float(percentage[:-1])>75):
                             if(subjects_in_this_rule not in self.relations):
                                 self.relations[subjects_in_this_rule] = [main_stuff]
